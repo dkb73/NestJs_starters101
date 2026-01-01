@@ -1,6 +1,7 @@
 version : '3.8'
 services:
     api:
+        env_file: .env
         build: .
         ports:
             - "3000:3000"
@@ -11,6 +12,7 @@ services:
             - CHOKIDAR_USEPOLLING=true
             - WATCH_MODE=true
             - PORT=3000
+            - JWT_SECRET=${JWT_SECRET}
         command: nodemon -L --watch src --ext ts --exec "nest start"
     
     mongo:

@@ -17,4 +17,16 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
+
+  // Add this inside UsersService class
+  async createGoogleUser(email: string, name: string): Promise<User> {
+    const newUser = new this.userModel({
+      email,
+      name,
+      roles: ['user'], // Default role
+      password: '',    // Empty password for OAuth users
+    });
+    return newUser.save();
+  }
 }
+

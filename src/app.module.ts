@@ -3,12 +3,17 @@ import { MongooseModule } from '@nestjs/mongoose'; // <--- Ensure this is import
 import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { UsersService } from './users/users.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     // This line creates the connection. If it is missing, your app crashes.
-    MongooseModule.forRoot('mongodb://mongo:27017/nest-starter'),
+    ConfigModule.forRoot({ isGlobal: true }), // <--- Add this FIRST
+    MongooseModule.forRoot(process.env.MONGO_URI!),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
