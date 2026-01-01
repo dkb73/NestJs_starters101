@@ -25,8 +25,7 @@ export class AuthService {
         user = await this.usersService.createGoogleUser(req.user.email, req.user.name);
     }
 
-    // 3. Issue the JWT (Key Card)
-    // FIX: We use user! to tell TypeScript "I promise user is not null"
+    // 3. the JWT (Key Card)
     const payload = { 
       sub: user!['_id'], 
       username: user.email, 

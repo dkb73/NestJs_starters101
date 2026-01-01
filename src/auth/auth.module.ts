@@ -4,25 +4,25 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { AuthGuard } from './auth.guard';
 import { UsersModule } from '../users/users.module'; 
 import { GoogleStrategy } from './google.strategy';
-// Import UsersModule
 
 @Module({
   imports: [
-    UsersModule, // We need this to check if users exist
+    UsersModule,
     PassportModule,
     JwtModule.registerAsync({
       global: true,
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '600s' }, // Token expires in 60 seconds
+        signOptions: { expiresIn: '600s' },
       }),
       inject: [ConfigService],
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, GoogleStrategy],
-  exports: [AuthService],
+  providers: [AuthService, GoogleStrategy, AuthGuard],
+  exports: [AuthService, AuthGuard],
 })
 export class AuthModule {}
