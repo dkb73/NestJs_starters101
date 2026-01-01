@@ -9,29 +9,6 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async signIn(email: string, pass: string): Promise<{ access_token: string }> {
-    // 1. Find the user
-    // (Note: Since we haven't built 'findByEmail' in UsersService yet, we need to add it or use findAll.
-    // Let's assume we will add findOne to UsersService in a moment.)
-    const users = await this.usersService.findAll(); 
-    const user = users.find(u => u.email === email);
-
-    // 2. Check "Password" (Mock logic: rejecting if no user found)
-    // In real app: await bcrypt.compare(pass, user.password)
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-
-    // 3. Create the Payload (Data inside the card)
-    // Inside signIn() method...
-const payload = { sub: user['_id'], username: user.email, roles: user.roles }; // <--- Add roles here
-
-    // 4. Generate the Access Token
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
-  }
-// ==================================================================================================================
   async googleLogin(req) {
     if (!req.user) {
       return 'No user from google';

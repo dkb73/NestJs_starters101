@@ -7,12 +7,6 @@ import { AuthGuard } from '@nestjs/passport';
 export class AuthController {
     constructor(private authService: AuthService) {}
 
-    @HttpCode(HttpStatus.OK)
-    @Post('login')
-    signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.email, signInDto.password);
-    }
-
     @Get('google')
     @UseGuards(AuthGuard('google'))
     async googleAuth(@Req() req) {}

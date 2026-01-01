@@ -16,7 +16,7 @@ import { GoogleStrategy } from './google.strategy';
       global: true,
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '60s' }, // Token expires in 60 seconds
+        signOptions: { expiresIn: '600s' }, // Token expires in 60 seconds
       }),
       inject: [ConfigService],
     }),
